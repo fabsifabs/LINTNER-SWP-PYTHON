@@ -1,21 +1,22 @@
 import random
 
-def getNumber():
+def draw(min,max, numbersPerDraw):
     a=[]
-    for i in range(46):
+    for i in range(max+1):
         a.append(i)
-    for i in range(0,6):
-        x = random.randint(0,44-i)
-        a[x],a[45-i] = a[45-i],a[x]
 
-    return a[-6:]
+    for i in range(min-1,numbersPerDraw):
+        x = random.randint(0,max-min-1-i)
+        a[x],a[max-min-i] = a[max-min-i],a[x]
 
+    return a[-numbersPerDraw:]
 
-d = []
+def drawALot(drawCount,min,max, numbersPerDraw ):
+    d = []
+    for i in range(drawCount):
+      d = d + draw(min,max,numbersPerDraw)
 
-for i in range(100000):
-  d = d + getNumber()
+    return d
 
-
-for i in range(1,46):
-    print(i,":",d.count(i))
+for i in range(0,45):
+    print(i+1,":",drawALot(100000,20,50,6).count(i) )
