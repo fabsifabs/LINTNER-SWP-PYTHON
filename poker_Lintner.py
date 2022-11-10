@@ -1,17 +1,11 @@
 import random
 
-cards = [i for i in range(52)]
-hands = ["royal flush","straight flush","four of a kind","full house","flush","straight","three of a kind","two pairs","pair","high card"]
-#print(cards)
-drawCount = 5
-
 occHand = [0]*10
 
-def draw():
-    random.shuffle(cards)
-    d = cards[:5]
+def draw(availableCards):
+    random.shuffle(availableCards)
+    d = availableCards[:5]
     d.sort()
-    #print(d)
     return d
 
 def checkHand(dC):
@@ -52,8 +46,10 @@ def checkHand(dC):
 
 
 def playCards(draws):
+    hands = ["royal flush", "straight flush", "four of a kind", "full house", "flush", "straight", "three of a kind","two pairs", "pair", "high card"]
+    cards = [i for i in range(52)]
     for i in range(draws):
-        checkHand(draw())
+        checkHand(draw(cards))
 
     print("Draws:",draws)
     print("sum",sum(occHand))
@@ -61,9 +57,11 @@ def playCards(draws):
         print("Absolute Occurences:",occHand[i]," \t|| Relative:", occHand[i]/draws," \t|| ",hands[i])
 
 
-
+def main():
+    x = input("How many Hands?")
+    playCards(int(x))
 
 if __name__ == "__main__":
-    playCards(500000)
+   main()
 
 
