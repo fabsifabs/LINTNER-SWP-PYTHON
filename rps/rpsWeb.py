@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from os.path import exists
 import pandas as pd
 import json
@@ -7,26 +7,24 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    data = getData()
-    return data
+    print("rendering")
+    print(type(getAllData()))
+    return render_template("index.html", data = getAllData())
 
 @app.route('/', methods=['PUT'])
 def addUserData():
     m = json.loads(request.data)
-    data = getData()
+    data = getAllData()
     print(m["Name"],m["Symbol"],m["Symbolanzahl"])
     if m["Name"] in data:
         if m["Symbol"] in data[m["Name"]]:
-            data[m["Name"]][m["Symbol"]]+=m["Symbolanzahl"]
-            print(1)
+            data[m["Name"]][m["Symbol"]]+=int(m["Symbolanzahl"])
         else:
-            print(2)
-            data[m["Name"]][m["Symbol"]]=m["Symbolanzahl"]
+            data[m["Name"]][m["Symbol"]]=int(m["Symbolanzahl"])
 
         updateData(data)
         return "Success"
     else:
-        print(3)
         data[m["Name"]]={m["Symbol"] : m["Symbolanzahl"]}
         updateData(data)
         return "Success"
@@ -34,18 +32,22 @@ def addUserData():
     print("Failure")
     return "Failure"
 
-@app.route('/', methods=['GET'])
+@app.route('/getData', methods=['GET'])
 def getData():
-    return json.dumps(getData)
+    data = getAnalysedData()
+    return json.dumps(data)
 
 @app.route('/<username>',methods=['GET'])
 def getUserData(username):
-    data = getData()
-    print(data)
-    print(data[username])
-    return json.dumps(data[username])
+    print("Sending userdata")
+    data = getAllData()
+    if username in data:
+        return json.dumps(data[username])
+    else:
+        return {"Error":"No User found"}
 
-def getData(path = "data.json"):
+def getAnalysedData(path = "data.json"):
+    print("Sending Data")
     if not exists(path):
         f = open("data.json", "x")
         return {}
@@ -56,12 +58,22 @@ def getData(path = "data.json"):
                 return {}
 
         data = analyseData(data)
-        print(type(data))
         print(data)
-        return json.dumps(data)
+        print("success")
+        return data
 
+def getAllData(path = "data.json"):
+    if not exists(path):
+        f = open("data.json", "x")
+        return {}
+    else:
+        with open(path) as d:
+            data = json.load(d)
+            if data == None:
+                return {}
+    return data
 def deleteUserData(username,path = "data.json"):
-    data = getData(path)
+    data = getAnalysedData(path)
     if username in data:
         del data[username]
         updateData(data)
@@ -89,4 +101,4 @@ def analyseData(data):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True,threaded=True)
