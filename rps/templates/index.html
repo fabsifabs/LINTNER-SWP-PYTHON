@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RockPaperSiccorsSpockLizzard</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script><!-- jQuery base library needed -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#allUser').DataTable();
+        });
+    </script>
+</head>
+<body>
+    <table id="allUser" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Symbol</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for u in data %}
+        <tr>
+            <td> {{u}}</td>
+            <td> {{data[u]}}</td>
+        </tr>
+    {% endfor%}
+    </tbody>
+    </table>
+</body>
+</html>

@@ -77,12 +77,18 @@ class Person:
         self.nName = nName
         self.alter = alter
         self.geschlecht = geschlecht
+        
+    def __str__(self):
+        return f"{self.nName} name: {self.vName}"
 
 
 class Mitarbeiter(Person):
     def __init__(self,vName,nName,alter,geschlecht,abteilung ):
         super().__init__(vName,nName,alter,geschlecht)
         self.abteilung = abteilung
+
+
+
 
 class Abteilungsleiter(Mitarbeiter):
     def __init__(self,vName,nName,alter,geschlecht,abteilung):
@@ -102,7 +108,8 @@ if __name__ == "__main__":
     abteilung2.mitarbeiter.append(Mitarbeiter("Luli","Lala",12,"Frau",abteilung2))
     abteilung2.mitarbeiter.append(Mitarbeiter("Hans","Hans",21,"Mann",abteilung2))
     abteilung2.mitarbeiter.append(Abteilungsleiter("Franz","Franz",22,"Mann",abteilung2))
-
+    print(abteilung1.mitarbeiter[0])
+    
     #print(firma.getAnzMitarbeiter())
     #print(firma.getAnzAbteilungsleiter())
     #print(firma.getAnzMitarbeiterAbteilung(abteilung1))
