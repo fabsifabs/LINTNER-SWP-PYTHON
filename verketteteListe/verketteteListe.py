@@ -1,3 +1,4 @@
+
 class listElement:
     def __init__(self, object):
         self.object = object
@@ -21,6 +22,7 @@ class listElement:
 
 class verkettList:
 
+
     def __init__(self):
         self.firstElemet = listElement(None)
         self.elementCount = 0
@@ -41,6 +43,8 @@ class verkettList:
             self.iteration = self.firstElemet
             raise StopIteration
 
+    def __len__(self):
+        return self.elementCount
 
     def getLast(self):
         e = self.firstElemet
@@ -154,6 +158,15 @@ class verkettList:
             e = e.getNextElement()
         
         raise Exception("ERROR: index out of range")
+
+    def shuffle(self):
+        import random
+        count = 0 
+        rounds = random.randrange(50,100)
+        while count <= rounds:
+            count +=1
+            self.swapTwoElements(random.randrange(0,self.elementCount),random.randrange(0,self.elementCount))
+
 
     def insertAfter(self,place, object):
         e = self.firstElemet

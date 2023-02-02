@@ -1,16 +1,11 @@
 from verketteteListe import verkettList, listElement
-
+import random
 
 def main():
     myList = verkettList()
-    myList.addLast(listElement(1))
-    myList.addLast(listElement(6))
-    myList.addLast(listElement(11))
-    myList.addLast(listElement(4))
-    myList.addLast(listElement(3))
-    myList.addLast(listElement(1))
-    myList.addLast(listElement(14))
-    myList.addLast(listElement(2))
+    for i in range(20):
+        myList.addLast(listElement(random.randrange(1,500)))
+    
 
     print(myList)
     myList.heapSort()
@@ -30,7 +25,16 @@ def main():
     print(myList)
     print(myList.elementIsInList(200))
     myList.deleteFirstElement(200)
+
+    print("Shuffle:\n")
     print(myList)
+    myList.shuffle()
+    print(myList)
+    myList.shuffle()
+    print(myList)
+    myList.shuffle()
+    print(myList)
+    
     
 
 if __name__ == "__main__":
