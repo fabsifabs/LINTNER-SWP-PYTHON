@@ -34,7 +34,6 @@ class verkettList:
         return self
 
     
-
     def __next__(self):
         if self.iteration.getNextElement() != None:
             self.iteration = self.iteration.getNextElement()
